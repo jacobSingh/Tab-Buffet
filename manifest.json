@@ -1,6 +1,6 @@
 {
-  "name": "Tab Inspector",
-  "description": "Utility for working with the extension tabs api",
+  "name": "Tab Buffet",
+  "description": "Tracks how many tabs you have open over time.  Makes a pretty chart.",
   "version": "0.1",
   "permissions": ["tabs", "http://*/*", "https://*/*"],
   "background_page": "background.html",

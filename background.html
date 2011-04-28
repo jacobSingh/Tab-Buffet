@@ -47,6 +47,9 @@
     return 0;
   }
 
+  /**
+   * Deletes all local storage.
+   */
   function resetData() {
     window.localStorage.clear();
   }
@@ -64,8 +67,7 @@
     log("Return from setItem" + key + ":" +  value);
   }
 
-  //Gets the item from local storage with the specified
-  //key
+  //Gets the item from local storage with the specified key
   function getItem(key) {
     var value;
     log('Get Item:' + key);
