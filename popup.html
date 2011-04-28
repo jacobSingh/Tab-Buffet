@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<script language="javascript" type="text/javascript" src="jquery.js"></script> 
+    	<script language="javascript" type="text/javascript" src="jquery.flot.js"></script>
+	
+<style>
+body {
+  min-width:600px;
+  overflow-x:hidden;
+}
+
+#tableData td {
+  border:1px solid black;
+  padding:3px;	
+}
+</style>
+
+<script>
+
+function plotChart(d) {
+  $.plot($("#placeholder"), [d], { xaxis: { mode: "time" } });
+}
+
+function plotTable(d) {
+  for (r in d) {
+  	$('#tableData').append($('<tr><td>' + d[r][0] + '</td><td>' + d[r][1] + '</td></tr>'));
+  }
+}
+
+function resetData() {
+  d = chrome.extension.getBackgroundPage().resetData();
+}
+
+$(document).ready(function() {
+	d = chrome.extension.getBackgroundPage().getData();
+	console.log(d);
+	plotChart(d);
+	//plotTable(d);
+	$('#resetLink').click(resetData);
+});
+
+</script>
+</head>
+<body>
+  <h1> Number of tabs open </h1>
+	<div id="placeholder" style="width:600px;height:300px;"></div>
+	<table id="tableData"></table>
+	<a href="#" id="resetLink">Reset</a>
+</body>
+</html>
