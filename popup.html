@@ -1,50 +1,51 @@
 <html>
 	<head>
-		<script language="javascript" type="text/javascript" src="jquery.js"></script> 
-    	<script language="javascript" type="text/javascript" src="jquery.flot.js"></script>
-	
-<style>
-body {
-  min-width:600px;
-  overflow-x:hidden;
-}
-
-#tableData td {
-  border:1px solid black;
-  padding:3px;	
-}
-</style>
-
+		<script language="javascript" type="text/javascript" src="scripts/jquery.js"></script> 
+  	<script language="javascript" type="text/javascript" src="scripts/jquery.flot.js"></script>
+  	<script language="javascript" type="text/javascript" src="scripts/js/jquery-ui-1.8.12.custom.min.js"></script>
+    <script language="javascript" type="text/javascript" src="scripts/tab_buffet.js"></script>
+      
+  <link rel="stylesheet" href="styles/reset.css" media="all">
+  <link rel="stylesheet" href="styles/typography.css" media="all">
+  <link rel="stylesheet" href="styles/all.css" media="all">
+  <link rel="stylesheet" href="styles/ui-lightness/jquery-ui-1.8.12.custom.css" media="all">
+  <link rel="stylesheet" href="styles/tab_buffet.css" media="all">
 <script>
 
-function plotChart(d) {
-  $.plot($("#placeholder"), [d], { xaxis: { mode: "time" } });
-}
-
-function plotTable(d) {
-  for (r in d) {
-  	$('#tableData').append($('<tr><td>' + d[r][0] + '</td><td>' + d[r][1] + '</td></tr>'));
-  }
-}
-
-function resetData() {
-  d = chrome.extension.getBackgroundPage().resetData();
-}
-
 $(document).ready(function() {
-	d = chrome.extension.getBackgroundPage().getData();
-	console.log(d);
-	plotChart(d);
-	//plotTable(d);
-	$('#resetLink').click(resetData);
+  (function start() {
+    var ui = new TabBuffet.UI()
+    ui.initializeDatePicker();
+    ui.refreshChart();
+    $('#dateRangeForm #start').change(function (){ui.refreshChart()});
+    $('#dateRangeForm #end').change(function (){ui.refreshChart()});
+    $("button").button();
+  	$('#resetLink').click(function() {
+      TabBuffet.UI.getAPI().resetData(); start();
+      });
+  	$('#generateData').click(function() {
+  	  TabBuffet.UI.getAPI().generateFakeData(); start();
+  	  });
+  })();
 });
 
 </script>
+
 </head>
 <body>
   <h1> Number of tabs open </h1>
-	<div id="placeholder" style="width:600px;height:300px;"></div>
-	<table id="tableData"></table>
-	<a href="#" id="resetLink">Reset</a>
+	<div id="placeholder" style="width:800px;height:300px;"></div>
+	<div class="group">
+  	<form id="dateRangeForm">
+  	  <label for="start"><span>Start Date</span>
+  	  <input type="text" id="start" />
+  	  </label>
+  	  <label for="end"><span>End Date</span>
+  	  <input type="text" id="end" />
+  	  </label>
+  	</form>
+  </div>
+  <button id="resetLink">Reset</button>
+  <button id="generateData">Generate Fake Data</button>
 </body>
 </html>
