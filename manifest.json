@@ -1,7 +1,7 @@
 {
   "name": "Tab Buffet",
   "description": "Tracks how many tabs you have open over time.  Makes a pretty chart.",
-  "version": "0.1",
+  "version": "0.2",
   "permissions": ["tabs", "http://*/*", "https://*/*"],
   "background_page": "background.html",
   "browser_action": {
